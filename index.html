@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player Design</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://kit.fontawesome.com/1d9c2b8a0a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="music-player">
+      <nav>
+        <div class="circle">
+          <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div class="circle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </nav>
+      <img src="468-thumbnail.png" alt="Media Album png" class="song-item">
+      <h1>Despacito</h1>
+      <p>Bad Bunny ft. Puerto Rican</p>
+
+      <audio id="song">
+        <source src="in-y2mate.com - Go  NEFFEX.mp3" type="audio/mpeg">
+      </audio>
+      <input type="range" name="progess" id="progress" value="0">
+
+
+      <div class="controls">
+        <div><i class="fa-solid fa-backward"></i></div>
+        <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrkIcon"></i></div>
+        <div><i class="fa-solid fa-forward"></i></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+
+    let progress = document.getElementById("progress");
+    let song = document.getElementById("song");
+    let ctrkIcon = document.getElementById("ctrkIcon");
+
+    song.onloadedmetadata=function() {
+      progress.max = song.duration;
+      progress.total = song.duration
+      progress.value = 0;
+    }
+
+    function playPause(){
+      if(ctrkIcon.classList.contains("fa-pause")){
+        song.pause();
+        ctrkIcon.classList.remove("fa-pause");
+        ctrkIcon.classList.add("fa-play");
+      }
+      else{
+              song.play();
+              ctrkIcon.classList.add("fa-pause");
+              ctrkIcon.classList.remove("fa-play");
+          }
+    }
+
+    if(song.play()){
+      setInterval(function(){
+        progress.value = song.currentTime;
+      },500);
+    }
+
+    progress.onchange = function(){
+      song.play();
+      song.currentTime = progress.value;
+      ctrkIcon.classList.add("fa-pause");
+      ctrkIcon.classList.remove("fa-play");
+    }
+
+  </script>
+</body>
+</html>
